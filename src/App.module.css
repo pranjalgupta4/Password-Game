@@ -1,0 +1,19 @@
+.gamePage{
+    background-color: #fffaea;
+    height: 100vh;
+    width: 100vw;
+}
+.logobar{
+    height: 60px;
+    padding: 14.5px;
+    margin-bottom: 20px;
+}
+
+.logo{
+    height: 31px;
+}
+
+.logo:hover{
+    scale: 1.05;
+}
+
