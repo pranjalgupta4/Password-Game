@@ -1,5 +1,6 @@
 import style from "./Content.module.css";
 import gameTitle from "/gametitle.svg";
+import Rules from "./Rules";
 import { useRef } from "react";
 
 export default function Content() {
@@ -28,6 +29,7 @@ export default function Content() {
             className={style.inputBox}
           ></textarea>
         </div>
+        <Rules></Rules>
       </div>
     </div>
   );

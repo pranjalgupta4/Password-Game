@@ -1,0 +1,15 @@
+.ruleCard{
+    width: 485px;
+    height: fit-content;
+    border: 1px solid;
+    border-radius: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+}
+
+.ruleCardCorrect{
+    border-color: #267b30;
+}
+.ruleCardIncorrect{
+    border-color: red;
+}
