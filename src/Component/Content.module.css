@@ -31,6 +31,7 @@
     font-size: 28px;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    resize: none;
 }
 
 .inputBox:focus{
