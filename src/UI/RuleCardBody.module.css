@@ -1,15 +1,23 @@
-.ruleCardBody{
-    width: 100%;
-    height: fit-content;
-    padding: 11px 17px 15px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+.ruleCardBody {
+  width: 100%;
+  height: fit-content;
+  padding: 11px 17px 15px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  display: grid;
+  grid-template-rows: repeat(2, auto);
+}
+.ruleCardBody div{
+    text-align: center;
+}
+.ruleCardBody div img{
+  height: 85px;
+  margin: 20px 20px 0 20px;
+}
+.ruleCardBodyCorrect {
+  background-color: #e3ffe3;
 }
 
-.ruleCardBodyCorrect{
-    background-color: #e3ffe3;
-}
-
-.ruleCardBodyIncorrect{
-    background-color: #ffecec;
+.ruleCardBodyIncorrect {
+  background-color: #ffecec;
 }

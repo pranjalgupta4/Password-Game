@@ -6,8 +6,11 @@ import RuleCardBody from "../UI/RuleCardBody";
 export default function Rule(prop) {
   return (
     <RuleCard status={prop.status}>
-      <RuleCardHead status={prop.status}>Rule X</RuleCardHead>
-      <RuleCardBody status={prop.status}>Somthing somthing</RuleCardBody>
+      <RuleCardHead status={prop.status}>Rule {prop.index}</RuleCardHead>
+      <RuleCardBody status={prop.status}>
+        {prop.description}
+        {prop.children}
+      </RuleCardBody>
     </RuleCard>
   );
 }
