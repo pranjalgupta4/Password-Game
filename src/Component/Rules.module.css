@@ -1,0 +1,12 @@
+.captcha-refresh {
+  height: 25px !important;
+}
+.captcha-refresh:hover {
+  scale: 1.2;
+  cursor: pointer;
+}
+.captcha-img {
+  width: 200px !important;
+  border: 2px solid black;
+  border-radius: 1rem;
+}

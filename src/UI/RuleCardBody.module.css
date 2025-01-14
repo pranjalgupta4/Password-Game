@@ -7,10 +7,12 @@
   display: grid;
   grid-template-rows: repeat(2, auto);
 }
-.ruleCardBody div{
-    text-align: center;
+.ruleCardBody div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.ruleCardBody div img{
+.ruleCardBody div img {
   height: 85px;
   margin: 20px 20px 0 20px;
 }
