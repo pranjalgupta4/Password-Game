@@ -125,3 +125,83 @@ const RulesList = [
     );
   },
 ];
+
+const RulesSetOdd = [
+  function Rules1(input) {
+    return (
+      <Rule
+        status={input.length >= 5 ? true : false}
+        index="1"
+        description="Your password must be at least 5 characters."
+      />
+    );
+  },
+  function Rules3(input) {
+    const reg = /[A-Z]/g;
+    return (
+      <Rule
+        status={input.match(reg) ? true : false}
+        index="3"
+        description="Your password must include an uppercase letter."
+      />
+    );
+  },
+  function Rule5(input) {
+    const reg = /\d/g;
+    const result = input.match(reg).map(Number);
+    let sum = 0;
+    result.forEach((num) => {
+      sum += num;
+    });
+
+    return (
+      <Rule
+        status={sum === 25}
+        index="5"
+        description="The digits in your password must add up to 25."
+      />
+    );
+  },
+  function Rule7(input) {
+    const reg = /I|V|X|L|C|D|M/g;
+    return (
+      <Rule
+        status={input.match(reg) ? True : False}
+        index="7"
+        description="Your password must include a roman numeral."
+      />
+    );
+  },
+  function Rule9(input) {
+    const reg = /(M{0,3})(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})/g;
+    const romanNums = input.match(reg);
+
+    const nums = romanNums.map((roman) => {
+      const romanMap = { I: 1, V: 5, X: 10, L: 50, C: 100, D: 500, M: 1000 };
+      let sum = 0;
+      for (let i = 0; i < roman.length; i++) {
+        const current = romanMap[roman[i]];
+        const next = romanMap[roman[i + 1]];
+        if (next && current < next) {
+          sum -= current;
+        } else {
+          sum += current;
+        }
+      }
+      return sum;
+    });
+
+    let mul = 1;
+    nums.forEach((num) => {
+      mul *= num;
+    });
+
+    return (
+      <Rule
+        status={mul === 35}
+        index="9"
+        description="The roman numerals in your password must multiply to 35"
+      />
+    );
+  },
+];
