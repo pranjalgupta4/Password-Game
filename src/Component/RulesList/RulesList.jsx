@@ -303,4 +303,199 @@ const RulesList = [
   // },
 ];
 
+const RulesSetOdd = [
+  function Rules1({ input }) {
+    return (
+      <Rule
+        status={input.length >= 5 ? true : false}
+        index="1"
+        description="Your password must be at least 5 characters."
+      />
+    );
+  },
+  function Rules3({ input }) {
+    const reg = /[A-Z]/g;
+    return (
+      <Rule
+        status={input.match(reg) ? true : false}
+        index="3"
+        description="Your password must include an uppercase letter."
+      />
+    );
+  },
+  function Rule5({ input }) {
+    const reg = /\d/g;
+    const result = input.match(reg).map(Number);
+    let sum = 0;
+    result.forEach((num) => {
+      sum += num;
+    });
+
+    return (
+      <Rule
+        status={sum === 25}
+        index="5"
+        description="The digits in your password must add up to 25."
+      />
+    );
+  },
+  function Rule7({ input }) {
+    const reg = /I|V|X|L|C|D|M/g;
+    return (
+      <Rule
+        status={input.match(reg) ? True : False}
+        index="7"
+        description="Your password must include a roman numeral."
+      />
+    );
+  },
+  function Rule9({ input }) {
+    const reg = /(M{0,3})(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})/g;
+    const romanNums = input.match(reg);
+
+    const nums = romanNums.map((roman) => {
+      const romanMap = { I: 1, V: 5, X: 10, L: 50, C: 100, D: 500, M: 1000 };
+      let sum = 0;
+      for (let i = 0; i < roman.length; i++) {
+        const current = romanMap[roman[i]];
+        const next = romanMap[roman[i + 1]];
+        if (next && current < next) {
+          sum -= current;
+        } else {
+          sum += current;
+        }
+      }
+      return sum;
+    });
+
+    let mul = 1;
+    nums.forEach((num) => {
+      mul *= num;
+    });
+
+    return (
+      <Rule
+        status={mul === 35}
+        index="9"
+        description="The roman numerals in your password must multiply to 35"
+      />
+    );
+  },
+  function Rule11({ input }) {
+    const [wordleAnswer, setWordleAnswer] = useState();
+
+    const wordleHandler = useCallback(async function () {
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = String(today.getMonth() + 1).padStart(2, "0");
+      const day = String(today.getDate()).padStart(2, "0");
+
+      const url = `https://proxy.corsfix.com/?https://www.nytimes.com/svc/wordle/v2/${year}-${month}-${day}.json`;
+
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error("Something went wrong :: " + response.status);
+        }
+        const result = await response.json();
+        setWordleAnswer(result.solution);
+      } catch (error) {
+        console.error(error);
+      }
+    }, []);
+
+    useEffect(() => {
+      wordleHandler();
+    }, [wordleHandler]);
+
+    const reg = new RegExp(`${wordleAnswer}`, g, i);
+
+    return (
+      <Rule
+        status={input.match(reg) ? true : false}
+        index="11"
+        description="Your password must include today's wordle answer."
+      />
+    );
+  },
+  function Rule13({ input }) {
+    const moonPhaseObject = {
+      "New Moon": "🌑",
+      "Waxing Crescent": "🌒",
+      "First Quarter": "🌓",
+      "Waxing Gibbous": "🌔",
+      "Full Moon": "🌕",
+      "Waning Gibbous": "🌖",
+      "Last Quarter": "🌗",
+      "Waning Crescent": "🌘",
+    };
+    const [moonPhase, setMoonPhase] = useState();
+    const moonPhaseHandler = useCallback(async function () {
+      const url =
+        "https://luna-phase.p.rapidapi.com/Luna_Phase?lat=51.5074&lon=-0.1278";
+      const options = {
+        method: "GET",
+        headers: {
+          "x-rapidapi-key":
+            "998d74b152msh2918a57284edac0p14b823jsne20ebe1c7d0c",
+          "x-rapidapi-host": "luna-phase.p.rapidapi.com",
+        },
+      };
+
+      try {
+        const response = await fetch(url, options);
+        if (!response.ok) {
+          throw new Error("Something went wrong :: " + response.status);
+        }
+        const result = await response.json();
+        setMoonPhase(result.Phase_Description);
+      } catch (error) {
+        console.error(error);
+      }
+    });
+    useEffect(() => {
+      moonPhaseHandler();
+    }, [moonPhaseHandler]);
+
+    const reg = new RegExp(moonPhaseObject[moonPhase]);
+
+    return (
+      <Rule
+        status={input.match(reg) ? true : false}
+        index="13"
+        description="Your password must include the current phase of the moon as an emoji."
+      />
+    );
+  },
+  function Rule15({ input }) {
+    const reg = /\d+/g;
+    const nums = input.match(reg);
+    let check = false;
+    nums.forEach((num) => {
+      if (num % 400 == 0) {
+        check = true;
+      } else if (num % 4 == 0 && num % 100 != 0) {
+        check = true;
+      }
+    });
+    <Rule
+      status={check}
+      index="15"
+      description="Your password must include the current phase of the moon as an emoji."
+    />;
+  },
+  function Rule17({ input }) {
+    const reg = /🥚/g;
+
+    return (
+      <Rule
+        status={input.match(reg) ? true : false}
+        index="17"
+        description="🥚 ← This is my chicken Paul. He hasn’t hatched yet, please put him in your password and keep him safe."
+      />
+    );
+  },
+];
+
 export default RulesList;
+
