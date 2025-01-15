@@ -1,7 +1,7 @@
 import style from "./Rule.module.css";
-import RuleCard from "../UI/RuleCard";
-import RuleCardHead from "../UI/RuleCardHead";
-import RuleCardBody from "../UI/RuleCardBody";
+import RuleCard from "./UI/RuleCard/RuleCard";
+import RuleCardHead from "./UI/RuleCard/RuleCardHead";
+import RuleCardBody from "./UI/RuleCard/RuleCardBody";
 
 export default function Rule(prop) {
   return (

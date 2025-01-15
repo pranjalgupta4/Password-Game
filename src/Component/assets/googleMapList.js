@@ -9,7 +9,7 @@ const googleMapList = [
     title: "Austria",
     link: "https://www.google.com/maps/@47.0675829,12.7752697,3a,75y,245.99h,83.11t/data=!3m8!1e1!3m6!1sAF1QipNHsE1rpbN4NKgqGGR_Hzz2odp-bMwQeruFFKa5!2e10!3e11!6shttps:%2F%2Flh5.googleusercontent.com%2Fp%2FAF1QipNHsE1rpbN4NKgqGGR_Hzz2odp-bMwQeruFFKa5%3Dw203-h100-k-no-pi0-ya340-ro-0-fo100!7i12000!8i6000?entry=ttu",
     embed:
-      "https://www.google.com/maps/embed?pb=!4v1686332514772!6m8!1m7!1sCAoSLEFGMVFpcE5Ic0UxcnBiTjROS2dxR0dSX0h6ejJvZHAtYk13UWVydUZGS2E1!2m2!1d47.06758288466445!2d12.77526967227459!3f245.99!4f-6.890000000000001!5f0.7820865974627469",
+      "https://www.google.com/maps/embed?pb=!4v1736852947754!6m8!1m7!1sHrit3dyTCGv8TxjnBQRTfA!2m2!1d47.06714824943678!2d12.77182760191734!3f311.040732177819!4f-2.4925604684338367!5f0.7820865974627469",
   },
   {
     title: "Belarus",
@@ -390,3 +390,9 @@ const googleMapList = [
       "https://www.google.com/maps/embed?pb=!4v1687119389195!6m8!1m7!1sO7gt2w-yxeZI97e82gkunQ!2m2!1d65.80550118091678!2d21.67888296764118!3f202.99!4f0.8499999999999943!5f0.4000000000000002",
   },
 ];
+
+const countryNames = [
+  ...new Set(googleMapList.map((country) => country.title)),
+];
+
+export { countryNames, googleMapList };
