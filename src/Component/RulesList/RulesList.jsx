@@ -127,7 +127,7 @@ const RulesList = [
 ];
 
 const RulesSetOdd = [
-  function Rules1(input) {
+  function Rules1({ input }) {
     return (
       <Rule
         status={input.length >= 5 ? true : false}
@@ -136,7 +136,7 @@ const RulesSetOdd = [
       />
     );
   },
-  function Rules3(input) {
+  function Rules3({ input }) {
     const reg = /[A-Z]/g;
     return (
       <Rule
@@ -146,7 +146,7 @@ const RulesSetOdd = [
       />
     );
   },
-  function Rule5(input) {
+  function Rule5({ input }) {
     const reg = /\d/g;
     const result = input.match(reg).map(Number);
     let sum = 0;
@@ -162,7 +162,7 @@ const RulesSetOdd = [
       />
     );
   },
-  function Rule7(input) {
+  function Rule7({ input }) {
     const reg = /I|V|X|L|C|D|M/g;
     return (
       <Rule
@@ -172,7 +172,7 @@ const RulesSetOdd = [
       />
     );
   },
-  function Rule9(input) {
+  function Rule9({ input }) {
     const reg = /(M{0,3})(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})/g;
     const romanNums = input.match(reg);
 
@@ -203,5 +203,108 @@ const RulesSetOdd = [
         description="The roman numerals in your password must multiply to 35"
       />
     );
+  },
+  function Rule11({ input }) {
+    const [wordleAnswer, setWordleAnswer] = useState();
+
+    const wordleHandler = useCallback(async function () {
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = String(today.getMonth() + 1).padStart(2, "0");
+      const day = String(today.getDate()).padStart(2, "0");
+
+      const url = `https://proxy.corsfix.com/?https://www.nytimes.com/svc/wordle/v2/${year}-${month}-${day}.json`;
+
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error("Something went wrong :: " + response.status);
+        }
+        const result = await response.json();
+        setWordleAnswer(result.solution);
+      } catch (error) {
+        console.error(error);
+      }
+    }, []);
+
+    useEffect(() => {
+      wordleHandler();
+    }, [wordleHandler]);
+
+    const reg = new RegExp(`${wordleAnswer}`, g, i);
+
+    return (
+      <Rule
+        status={input.match(reg) ? true : false}
+        index="11"
+        description="Your password must include today's wordle answer."
+      />
+    );
+  },
+  function Rule13({ input }) {
+    const moonPhaseObject = {
+      "New Moon": "🌑",
+      "Waxing Crescent": "🌒",
+      "First Quarter": "🌓",
+      "Waxing Gibbous": "🌔",
+      "Full Moon": "🌕",
+      "Waning Gibbous": "🌖",
+      "Last Quarter": "🌗",
+      "Waning Crescent": "🌘",
+    };
+    const [moonPhase, setMoonPhase] = useState();
+    const moonPhaseHandler = useCallback(async function () {
+      const url =
+        "https://luna-phase.p.rapidapi.com/Luna_Phase?lat=51.5074&lon=-0.1278";
+      const options = {
+        method: "GET",
+        headers: {
+          "x-rapidapi-key":
+            "998d74b152msh2918a57284edac0p14b823jsne20ebe1c7d0c",
+          "x-rapidapi-host": "luna-phase.p.rapidapi.com",
+        },
+      };
+
+      try {
+        const response = await fetch(url, options);
+        if (!response.ok) {
+          throw new Error("Something went wrong :: " + response.status);
+        }
+        const result = await response.json();
+        setMoonPhase(result.Phase_Description);
+      } catch (error) {
+        console.error(error);
+      }
+    });
+    useEffect(() => {
+      moonPhaseHandler();
+    }, [moonPhaseHandler]);
+
+    const reg = new RegExp(moonPhaseObject[moonPhase]);
+
+    return (
+      <Rule
+        status={input.match(reg) ? true : false}
+        index="13"
+        description="Your password must include the current phase of the moon as an emoji."
+      />
+    );
+  },
+  function Rule15({ input }) {
+    const reg = /\d+/g;
+    const nums = input.match(reg);
+    let check = false;
+    nums.forEach((num) => {
+      if (num % 400 == 0) {
+        check = true;
+      } else if (num % 4 == 0 && num % 100 != 0) {
+        check = true;
+      }
+    });
+    <Rule
+      status={check}
+      index="13"
+      description="Your password must include the current phase of the moon as an emoji."
+    />;
   },
 ];
