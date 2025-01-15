@@ -1,0 +1,55 @@
+.captcha-refresh {
+  height: 25px;
+  margin: 10px;
+}
+.captcha-refresh:hover {
+  scale: 1.2;
+  cursor: pointer;
+}
+.captcha-img {
+  margin-top: 10px;
+  width: 200px;
+  border: 2px solid black;
+  border-radius: 1rem;
+}
+.googlemap {
+  width: 100%;
+  height: 450px;
+  border: none;
+  border-radius: 1rem;
+  margin-top: 10px;
+}
+
+.anchor-tag {
+  color: red;
+}
+.chessboard {
+  flex-direction: column;
+}
+
+.chessboard-img {
+  width: 90%;
+  height: auto;
+  border-radius: 1rem;
+  margin: 20px;
+}
+.chessboard-p {
+  font-style: italic;
+  margin: 10px;
+}
+.errorSvg {
+  height: 22px;
+  width: 22px;
+  margin: 0 3px 0 8px;
+}
+.marginTop {
+  margin: 10px 0 0 0;
+}
+.rule-div-img {
+  height: 85px;
+  margin: 20px 20px 0 20px;
+}
+
+.unordered-list{
+  margin-left: 40px;
+}
