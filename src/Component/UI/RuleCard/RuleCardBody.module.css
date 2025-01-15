@@ -11,11 +11,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-}
-.ruleCardBody div img {
-  height: 85px;
-  margin: 20px 20px 0 20px;
-}
+} 
+
 .ruleCardBodyCorrect {
   background-color: #e3ffe3;
 }
