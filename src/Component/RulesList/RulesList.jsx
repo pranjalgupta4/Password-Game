@@ -12,87 +12,118 @@ import chessFens from "../assets/chessFens";
 import periodicTable from "../assets/periodicTable";
 
 const RulesList = [
-  function Rule1({ input }) {
-    return (
-      <Rule
-        status={input.length >= 5 ? true : false}
-        index="1"
-        description="Your password must be at least 5 characters."
-      />
-    );
+  function Rule1(input) {
+    const isFollowed = input.length >= 5 ? true : false;
+    return {
+      comp: (
+        <Rule
+          status={isFollowed}
+          index="1"
+          description="Your password must be at least 5 characters."
+        />
+      ),
+      isFollowed,
+    };
   },
-  function Rule2(props) {
+  function Rule2(input) {
     const reg = /\d/g;
-    return (
-      <Rule
-        status={props.input.match(reg) ? true : false}
-        index="2"
-        description="Your password must include a number."
-      />
-    );
+    const isFollowed = input.match(reg) ? true : false;
+    return {
+      comp: (
+        <Rule
+          status={isFollowed}
+          index="2"
+          description="Your password must include a number."
+        />
+      ),
+      isFollowed,
+    };
   },
-  function Rule3({ input }) {
+  function Rule3(input) {
     const reg = /[A-Z]/g;
-    return (
-      <Rule
-        status={input.match(reg) ? true : false}
-        index="3"
-        description="Your password must include an uppercase letter."
-      />
-    );
+    const isFollowed = input.match(reg) ? true : false;
+    return {
+      comp: (
+        <Rule
+          status={isFollowed}
+          index="3"
+          description="Your password must include an uppercase letter."
+        />
+      ),
+      isFollowed,
+    };
   },
-  function Rule4(props) {
+  function Rule4(input) {
     const reg = /[^\w\s]/g;
-    return (
-      <Rule
-        status={props.input.match(reg) ? false : true}
-        index="4"
-        description="Your password must include a special character."
-      />
-    );
+    const isFollowed = input.match(reg) ? false : true;
+    return {
+      comp: (
+        <Rule
+          status={isFollowed}
+          index="4"
+          description="Your password must include a special character."
+        />
+      ),
+      isFollowed,
+    };
   },
-  function Rule5({ input }) {
+  function Rule5(input) {
     const reg = /\d/g;
-    const result = input.match(reg).map(Number);
+    let result = input.match(reg);
     let sum = 0;
-    result.forEach((num) => {
-      sum += num;
-    });
+    if (result) {
+      result = result.map(Number);
+      result.forEach((num) => {
+        sum += num;
+      });
+    }
+    const isFollowed = sum === 25 ? true : false;
 
-    return (
-      <Rule
-        status={sum === 25}
-        index="5"
-        description="The digits in your password must add up to 25."
-      />
-    );
+    return {
+      comp: (
+        <Rule
+          status={isFollowed}
+          index="5"
+          description="The digits in your password must add up to 25."
+        />
+      ),
+      isFollowed,
+    };
   },
-  function Rule6(props) {
+  function Rule6(input) {
     const reg =
       /(January|February|March|April|May|June|July|August|September|October|November|December)/gi;
-    return (
-      <Rule
-        status={props.input.match(reg) ? true : false}
-        index="6"
-        description="Your password must include a month of the year."
-      />
-    );
+    const isFollowed = input.match(reg) ? false : true;
+    return {
+      comp: (
+        <Rule
+          status={isFollowed}
+          index="6"
+          description="Your password must include a month of the year."
+        />
+      ),
+      isFollowed,
+    };
   },
-  function Rule7({ input }) {
+  function Rule7(input) {
     const reg = /I|V|X|L|C|D|M/g;
-    return (
-      <Rule
-        status={input.match(reg) ? True : False}
-        index="7"
-        description="Your password must include a roman numeral."
-      />
-    );
+    const isFollowed = input.match(reg) ? false : true;
+    return {
+      comp: (
+        <Rule
+          status={isFollowed}
+          index="7"
+          description="Your password must include a roman numeral."
+        />
+      ),
+      isFollowed,
+    };
   },
-  function Rule8(props) {
+  function Rule8(input) {
     const reg = /(pepsi|starbucks|shell)/gi;
     return (
       <Rule
-        status={props.input.match(reg) ? true : false}
+        status={input.match(reg) ? true : false}
         index="8"
         description="Your password must include one of our sponsors:"
       >
@@ -108,7 +139,7 @@ const RulesList = [
       </Rule>
     );
   },
-  function Rule9({ input }) {
+  function Rule9(input) {
     const reg = /(M{0,3})(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})/g;
     const romanNums = input.match(reg);
 
@@ -140,7 +171,7 @@ const RulesList = [
       />
     );
   },
-  function Rule10(props) {
+  function Rule10(input) {
     const [imgUrl, setImgUrl] = useState(defaultCaptcha);
     const [captchaText, setCaptchaText] = useState("WCf6Uc");
 
@@ -173,7 +204,7 @@ const RulesList = [
     const reg = new RegExp(captchaText);
     return (
       <Rule
-        status={props.input.match(reg) ? true : false}
+        status={input.match(reg) ? true : false}
         index="10"
         description="Your password must include this CAPTCHA:"
       >
@@ -193,7 +224,7 @@ const RulesList = [
       </Rule>
     );
   },
-  function Rule11({ input }) {
+  function Rule11(input) {
     const [wordleAnswer, setWordleAnswer] = useState();
 
     const wordleHandler = useCallback(async function () {
@@ -230,18 +261,18 @@ const RulesList = [
       />
     );
   },
-  function Rule12(props) {
+  function Rule12(input) {
     const reg =
       /(He|Li|Be|Ne|Na|Mg|Al|Si|Cl|Ar|Ca|Sc|Ti|Cr|Mn|Fe|Co|Ni|Cu|Zn|Ga|Ge|As|Se|Br|Kr|Rb|Sr|Zr|Nb|Mo|Tc|Ru|Rh|Pd|Ag|Cd|In|Sn|Sb|Te|Xe|Cs|Ba|La|Ce|Pr|Nd|Pm|Sm|Eu|Gd|Tb|Dy|Ho|Er|Tm|Yb|Lu|Hf|Ta|W|Re|Os|Ir|Pt|Au|Hg|Tl|Pb|Bi|Po|At|Rn|Fr|Ra|Ac|Th|Pa|Np|Pu|Am|Cm|Bk|Cf|Es|Fm|Md|No|Lr|Rf|Db|Sg|Bh|Hs|Mt|Ds|Rg|Cn|Fl|Lv|Ts|Og)/g;
     return (
       <Rule
-        status={props.input.match(reg) ? true : false}
+        status={input.match(reg) ? true : false}
         index="12"
         description="Your password must include a two letter symbol from the periodic table."
       />
     );
   },
-  function Rule13({ input }) {
+  function Rule13(input) {
     const moonPhaseObject = {
       "New Moon": "🌑",
       "Waxing Crescent": "🌒",
@@ -290,15 +321,15 @@ const RulesList = [
       />
     );
   },
-  function Rule14(props) {
+  function Rule14(input) {
     const place = googleMapList[Math.floor(Math.random() * 64)];
     const reg = new RegExp(place.title, "gi");
     const countries = [];
     countryNames.map((name) => {
       const reg2 = new RegExp(name, "gi");
-      props.input.match(reg2) && countries.push(name);
+      input.match(reg2) && countries.push(name);
     });
-    const status = props.input.match(reg) ? true : false;
+    const status = input.match(reg) ? true : false;
 
     return (
       <Rule
@@ -326,7 +357,7 @@ const RulesList = [
       </Rule>
     );
   },
-  function Rule15({ input }) {
+  function Rule15(input) {
     const reg = /\d+/g;
     const nums = input.match(reg);
     let check = false;
@@ -343,7 +374,7 @@ const RulesList = [
       description="Your password must include the current phase of the moon as an emoji."
     />;
   },
-  function Rule16(props) {
+  function Rule16(input) {
     const description = (
       <>
         Your password must include the best move in
@@ -362,8 +393,8 @@ const RulesList = [
     let element = [];
     const index = Math.floor(Math.random() * 192);
 
-    if (props.input.match(reg)) {
-      const moves = props.input.match(reg);
+    if (input.match(reg)) {
+      const moves = input.match(reg);
       moves.map((move) => {
         try {
           const chess = new Chess();
@@ -428,7 +459,7 @@ const RulesList = [
       </Rule>
     );
   },
-  function Rule17({ input }) {
+  function Rule17(input) {
     const reg = /🥚/g;
 
     return (
@@ -439,7 +470,7 @@ const RulesList = [
       />
     );
   },
-  function Rule18(props) {
+  function Rule18(input) {
     let status = false;
     function calculateTotalAtomicMass(input) {
       const reg = /[A-Z][a-z]?/g;
@@ -460,7 +491,7 @@ const RulesList = [
       }, 0);
     }
 
-    const totalMass = calculateTotalAtomicMass(props.input);
+    const totalMass = calculateTotalAtomicMass(input);
     totalMass === 200 ? (status = true) : (status = false);
 
     return (
@@ -471,7 +502,7 @@ const RulesList = [
       />
     );
   },
-  // function Rule22(props) {
+  // function Rule22(input) {
   //   const description = (
   //     <>
   //       <p>Your password must contain one of the following affirmations:</p>
@@ -486,7 +517,7 @@ const RulesList = [
 
   //   return (
   //     <Rule
-  //       status={props.input.match(reg) ? true : false}
+  //       status={input.match(reg) ? true : false}
   //       description={description}
   //       index="22"
   //     />

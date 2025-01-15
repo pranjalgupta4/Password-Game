@@ -1,15 +1,18 @@
 import style from "./Content.module.css";
 import gameTitle from "/gametitle.svg";
 import Rules from "./Rules";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 export default function Content() {
   const inputBoxRef = useRef(null);
+  const [password, setPassword] = useState("");
+  const [numRules, setNumRules] = useState(1);
 
   const handleInput = () => {
     if (inputBoxRef.current) {
       inputBoxRef.current.style.height = "auto";
       inputBoxRef.current.style.height = `${inputBoxRef.current.scrollHeight}px`;
+      setPassword(inputBoxRef.current.value);
     }
   };
 
@@ -29,7 +32,11 @@ export default function Content() {
             className={style.inputBox}
           ></textarea>
         </div>
-        <Rules></Rules>
+        <Rules
+          input={password}
+          numRules={numRules}
+          setNumRules={setNumRules}
+        ></Rules>
       </div>
     </div>
   );

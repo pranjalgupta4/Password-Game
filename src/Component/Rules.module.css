@@ -53,3 +53,15 @@
 .unordered-list{
   margin-left: 40px;
 }
+
+.rules{
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 10px;
+  overflow: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.rules::-webkit-scrollbar {
+  display: none;
+}
