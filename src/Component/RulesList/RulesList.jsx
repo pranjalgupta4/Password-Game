@@ -303,8 +303,19 @@ const RulesSetOdd = [
     });
     <Rule
       status={check}
-      index="13"
+      index="15"
       description="Your password must include the current phase of the moon as an emoji."
     />;
+  },
+  function Rule17({ input }) {
+    const reg = /🥚/g;
+
+    return (
+      <Rule
+        status={input.match(reg) ? true : false}
+        index="17"
+        description="🥚 ← This is my chicken Paul. He hasn’t hatched yet, please put him in your password and keep him safe."
+      />
+    );
   },
 ];
