@@ -55,7 +55,7 @@ const RulesList = [
   },
   function Rule4(input) {
     const reg = /[^\w\s]/g;
-    const isFollowed = input.match(reg) ? false : true;
+    const isFollowed = input.match(reg) ? true : false;
     return {
       comp: (
         <Rule
@@ -93,7 +93,7 @@ const RulesList = [
   function Rule6(input) {
     const reg =
       /(January|February|March|April|May|June|July|August|September|October|November|December)/gi;
-    const isFollowed = input.match(reg) ? false : true;
+    const isFollowed = input.match(reg) ? true : false;
     return {
       comp: (
         <Rule
@@ -107,7 +107,7 @@ const RulesList = [
   },
   function Rule7(input) {
     const reg = /I|V|X|L|C|D|M/g;
-    const isFollowed = input.match(reg) ? false : true;
+    const isFollowed = input.match(reg) ? true : false;
     return {
       comp: (
         <Rule
