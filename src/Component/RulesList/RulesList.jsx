@@ -121,23 +121,27 @@ const RulesList = [
   },
   function Rule8(input) {
     const reg = /(pepsi|starbucks|shell)/gi;
-    return (
-      <Rule
-        status={input.match(reg) ? true : false}
-        index="8"
-        description="Your password must include one of our sponsors:"
-      >
-        <div>
-          <img src={pepsi} alt="pepsi" className={styles["rule-div-img"]} />
-          <img src={shell} alt="shell" className={styles["rule-div-img"]} />
-          <img
-            src={starbucks}
-            alt="starbucks"
-            className={styles["rule-div-img"]}
-          />
-        </div>
-      </Rule>
-    );
+    const isFollowed = input.match(reg) ? true : false;
+    return {
+      comp: (
+        <Rule
+          status={isFollowed}
+          index="8"
+          description="Your password must include one of our sponsors:"
+        >
+          <div>
+            <img src={pepsi} alt="pepsi" className={styles["rule-div-img"]} />
+            <img src={shell} alt="shell" className={styles["rule-div-img"]} />
+            <img
+              src={starbucks}
+              alt="starbucks"
+              className={styles["rule-div-img"]}
+            />
+          </div>
+        </Rule>
+      ),
+      isFollowed,
+    };
   },
   function Rule9(input) {
     const reg = /(M{0,3})(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})/g;
@@ -155,6 +159,9 @@ const RulesList = [
           sum += current;
         }
       }
+      if (sum === 0) {
+        return 1;
+      }
       return sum;
     });
 
@@ -162,14 +169,17 @@ const RulesList = [
     nums.forEach((num) => {
       mul *= num;
     });
-
-    return (
-      <Rule
-        status={mul === 35}
-        index="9"
-        description="The roman numerals in your password must multiply to 35"
-      />
-    );
+    const isFollowed = mul === 35;
+    return {
+      comp: (
+        <Rule
+          status={isFollowed}
+          index="9"
+          description="The roman numerals in your password must multiply to 35"
+        />
+      ),
+      isFollowed,
+    };
   },
   function Rule10(input) {
     const [imgUrl, setImgUrl] = useState(defaultCaptcha);
@@ -202,27 +212,31 @@ const RulesList = [
     }, [captchaHandler]);
 
     const reg = new RegExp(captchaText);
-    return (
-      <Rule
-        status={input.match(reg) ? true : false}
-        index="10"
-        description="Your password must include this CAPTCHA:"
-      >
-        <div>
-          <img
-            src={imgUrl}
-            alt="Image Captcha"
-            className={styles["captcha-img"]}
-          />
-          <img
-            src={refresh}
-            alt="refresh"
-            onClick={captchaHandler}
-            className={styles["captcha-refresh"]}
-          />
-        </div>
-      </Rule>
-    );
+    const isFollowed = input.match(reg) ? true : false;
+    return {
+      comp: (
+        <Rule
+          status={isFollowed}
+          index="10"
+          description="Your password must include this CAPTCHA:"
+        >
+          <div>
+            <img
+              src={imgUrl}
+              alt="Image Captcha"
+              className={styles["captcha-img"]}
+            />
+            <img
+              src={refresh}
+              alt="refresh"
+              onClick={captchaHandler}
+              className={styles["captcha-refresh"]}
+            />
+          </div>
+        </Rule>
+      ),
+      isFollowed,
+    };
   },
   function Rule11(input) {
     const [wordleAnswer, setWordleAnswer] = useState();
@@ -252,25 +266,32 @@ const RulesList = [
     }, [wordleHandler]);
 
     const reg = new RegExp(`${wordleAnswer}`, g, i);
-
-    return (
-      <Rule
-        status={input.match(reg) ? true : false}
-        index="11"
-        description="Your password must include today's wordle answer."
-      />
-    );
+    const isFollowed = input.match(reg) ? true : false;
+    return {
+      comp: (
+        <Rule
+          status={isFollowed}
+          index="11"
+          description="Your password must include today's wordle answer."
+        />
+      ),
+      isFollowed,
+    };
   },
   function Rule12(input) {
     const reg =
       /(He|Li|Be|Ne|Na|Mg|Al|Si|Cl|Ar|Ca|Sc|Ti|Cr|Mn|Fe|Co|Ni|Cu|Zn|Ga|Ge|As|Se|Br|Kr|Rb|Sr|Zr|Nb|Mo|Tc|Ru|Rh|Pd|Ag|Cd|In|Sn|Sb|Te|Xe|Cs|Ba|La|Ce|Pr|Nd|Pm|Sm|Eu|Gd|Tb|Dy|Ho|Er|Tm|Yb|Lu|Hf|Ta|W|Re|Os|Ir|Pt|Au|Hg|Tl|Pb|Bi|Po|At|Rn|Fr|Ra|Ac|Th|Pa|Np|Pu|Am|Cm|Bk|Cf|Es|Fm|Md|No|Lr|Rf|Db|Sg|Bh|Hs|Mt|Ds|Rg|Cn|Fl|Lv|Ts|Og)/g;
-    return (
-      <Rule
-        status={input.match(reg) ? true : false}
-        index="12"
-        description="Your password must include a two letter symbol from the periodic table."
-      />
-    );
+    const isFollowed = input.match(reg) ? true : false;
+    return {
+      comp: (
+        <Rule
+          status={isFollowed}
+          index="12"
+          description="Your password must include a two letter symbol from the periodic table."
+        />
+      ),
+      isFollowed,
+    };
   },
   function Rule13(input) {
     const moonPhaseObject = {
@@ -312,14 +333,17 @@ const RulesList = [
     }, [moonPhaseHandler]);
 
     const reg = new RegExp(moonPhaseObject[moonPhase]);
-
-    return (
-      <Rule
-        status={input.match(reg) ? true : false}
-        index="13"
-        description="Your password must include the current phase of the moon as an emoji."
-      />
-    );
+    const isFollowed = input.match(reg) ? true : false;
+    return {
+      comp: (
+        <Rule
+          status={isFollowed}
+          index="13"
+          description="Your password must include the current phase of the moon as an emoji."
+        />
+      ),
+      isFollowed,
+    };
   },
   function Rule14(input) {
     const place = googleMapList[Math.floor(Math.random() * 64)];
@@ -329,33 +353,40 @@ const RulesList = [
       const reg2 = new RegExp(name, "gi");
       input.match(reg2) && countries.push(name);
     });
-    const status = input.match(reg) ? true : false;
+    const isFollowed = input.match(reg) ? true : false;
 
-    return (
-      <Rule
-        status={status}
-        description="Your password must include the name of this country."
-        index="14"
-      >
-        {countries && !status && (
-          <div className={styles.marginTop}>
-            {countries.map((ele) => {
-              return (
-                <>
-                  <img
-                    src={errorSvg}
-                    alt="errorSvg"
-                    className={styles.errorSvg}
-                  />
-                  {ele}
-                </>
-              );
-            })}
-          </div>
-        )}
-        <iframe className={styles.googlemap} src={place.embed} loading="lazy" />
-      </Rule>
-    );
+    return {
+      comp: (
+        <Rule
+          status={isFollowed}
+          description="Your password must include the name of this country."
+          index="14"
+        >
+          {countries && !isFollowed && (
+            <div className={styles.marginTop}>
+              {countries.map((ele) => {
+                return (
+                  <>
+                    <img
+                      src={errorSvg}
+                      alt="errorSvg"
+                      className={styles.errorSvg}
+                    />
+                    {ele}
+                  </>
+                );
+              })}
+            </div>
+          )}
+          <iframe
+            className={styles.googlemap}
+            src={place.embed}
+            loading="lazy"
+          />
+        </Rule>
+      ),
+      isFollowed,
+    };
   },
   function Rule15(input) {
     const reg = /\d+/g;
@@ -368,11 +399,17 @@ const RulesList = [
         check = true;
       }
     });
-    <Rule
-      status={check}
-      index="15"
-      description="Your password must include the current phase of the moon as an emoji."
-    />;
+    const isFollowed = check;
+    return {
+      comp: (
+        <Rule
+          status={isFollowed}
+          index="15"
+          description="Your password must include the current phase of the moon as an emoji."
+        />
+      ),
+      isFollowed,
+    };
   },
   function Rule16(input) {
     const description = (
@@ -425,50 +462,57 @@ const RulesList = [
     } else {
       status = false;
     }
-    return (
-      <Rule status={status} description={description} index="16">
-        <div className={styles["chessboard"]}>
-          {element && !status && (
-            <div className={styles.marginTop}>
-              {element.map((ele) => {
-                return (
-                  <>
-                    <img
-                      src={errorSvg}
-                      alt="errorSvg"
-                      className={styles.errorSvg}
-                    />
-                    {ele}
-                  </>
-                );
-              })}
-            </div>
-          )}
-          <img
-            src={`https://fen2image.chessvision.ai/${chessFens[index].fen}`}
-            alt="Chessboard"
-            className={styles["chessboard-img"]}
-          />
+    const isFollowed = status;
+    return {
+      comp: (
+        <Rule status={isFollowed} description={description} index="16">
+          <div className={styles["chessboard"]}>
+            {element && !isFollowed && (
+              <div className={styles.marginTop}>
+                {element.map((ele) => {
+                  return (
+                    <>
+                      <img
+                        src={errorSvg}
+                        alt="errorSvg"
+                        className={styles.errorSvg}
+                      />
+                      {ele}
+                    </>
+                  );
+                })}
+              </div>
+            )}
+            <img
+              src={`https://fen2image.chessvision.ai/${chessFens[index].fen}`}
+              alt="Chessboard"
+              className={styles["chessboard-img"]}
+            />
 
-          {chessFens[index].fen.match(/\sb\s/g) ? (
-            <p className={styles["chessboard-p"]}>Black to move</p>
-          ) : (
-            <p className={styles["chessboard-p"]}>White to move</p>
-          )}
-        </div>
-      </Rule>
-    );
+            {chessFens[index].fen.match(/\sb\s/g) ? (
+              <p className={styles["chessboard-p"]}>Black to move</p>
+            ) : (
+              <p className={styles["chessboard-p"]}>White to move</p>
+            )}
+          </div>
+        </Rule>
+      ),
+      isFollowed,
+    };
   },
   function Rule17(input) {
     const reg = /🥚/g;
-
-    return (
-      <Rule
-        status={input.match(reg) ? true : false}
-        index="17"
-        description="🥚 ← This is my chicken Paul. He hasn’t hatched yet, please put him in your password and keep him safe."
-      />
-    );
+    const isFollowed = input.match(reg) ? true : false;
+    return {
+      comp: (
+        <Rule
+          status={isFollowed}
+          index="17"
+          description="🥚 ← This is my chicken Paul. He hasn’t hatched yet, please put him in your password and keep him safe."
+        />
+      ),
+      isFollowed,
+    };
   },
   function Rule18(input) {
     let status = false;
@@ -494,13 +538,18 @@ const RulesList = [
     const totalMass = calculateTotalAtomicMass(input);
     totalMass === 200 ? (status = true) : (status = false);
 
-    return (
-      <Rule
-        status={status}
-        description="The elements in your password must have atomic numbers that add up to 200."
-        index="18"
-      />
-    );
+    const isFollowed = status;
+
+    return {
+      comp: (
+        <Rule
+          status={isFollowed}
+          description="The elements in your password must have atomic numbers that add up to 200."
+          index="18"
+        />
+      ),
+      isFollowed,
+    };
   },
   // function Rule22(input) {
   //   const description = (
@@ -514,14 +563,11 @@ const RulesList = [
   //     </>
   //   );
   //   const reg = /I am (loved|worthy|enough)/gi;
-
-  //   return (
-  //     <Rule
-  //       status={input.match(reg) ? true : false}
-  //       description={description}
-  //       index="22"
-  //     />
-  //   );
+  //   const isFollowed = input.match(reg) ? true : false;
+  //   return {
+  //     comp: <Rule status={isFollowed} description={description} index="22" />,
+  //     isFollowed,
+  //   };
   // },
 ];
 
