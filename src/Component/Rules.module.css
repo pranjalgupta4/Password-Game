@@ -50,18 +50,44 @@
   margin: 20px 20px 0 20px;
 }
 
-.unordered-list{
+.unordered-list {
   margin-left: 40px;
 }
 
-.rules{
+.rules {
   display: flex;
   flex-direction: column-reverse;
-  gap: 10px;
+  gap: 20px;
   overflow: scroll;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
 .rules::-webkit-scrollbar {
   display: none;
+}
+
+.player {
+  width: 100%;
+  border: none;
+  border-radius: 1rem;
+  margin: 5px 0;
+}
+
+.hexBox {
+  height: 180px;
+  width: 100%;
+  border-radius: 1rem;
+  margin: 8px 0;
+  position: relative;
+}
+.hexBox-refresh {
+  background-color: white;
+  border-radius: 40%;
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+}
+.hexBox-refresh:hover {
+  scale: 1.2;
+  cursor: pointer;
 }

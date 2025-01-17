@@ -551,24 +551,115 @@ const RulesList = [
       isFollowed,
     };
   },
-  // function Rule22(input) {
-  //   const description = (
-  //     <>
-  //       <p>Your password must contain one of the following affirmations:</p>
-  //       <ul className={styles["unordered-list"]}>
-  //         <li>I am loved</li>
-  //         <li>I am worthy</li>
-  //         <li>I am enough</li>
-  //       </ul>
-  //     </>
-  //   );
-  //   const reg = /I am (loved|worthy|enough)/gi;
-  //   const isFollowed = input.match(reg) ? true : false;
-  //   return {
-  //     comp: <Rule status={isFollowed} description={description} index="22" />,
-  //     isFollowed,
-  //   };
-  // },
+  function Rule22(input) {
+    const description = (
+      <>
+        <p>Your password must contain one of the following affirmations:</p>
+        <ul className={styles["unordered-list"]}>
+          <li>I am loved</li>
+          <li>I am worthy</li>
+          <li>I am enough</li>
+        </ul>
+      </>
+    );
+    const reg = /I am (loved|worthy|enough)/gi;
+
+    return (
+      <Rule
+        status={input.match(reg) ? true : false}
+        description={description}
+        index="22"
+      />
+    );
+  },
+  function Rule24(input) {
+    const [status, setStatus] = useState(false);
+    const [callStatus, setCallStatus] = useState(false);
+    let player;
+
+    useEffect(() => {
+      const tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      tag.async = true;
+      document.body.appendChild(tag);
+
+      if (callStatus) {
+        window.onYouTubeIframeAPIReady = () => {
+          player = new window.YT.Player("player", {
+            videoId: videoID,
+            events: {
+              onReady: (event) => {
+                checkDuration();
+              },
+            },
+          });
+        };
+      }
+    }, [input]);
+
+    const minutes = Math.round(Math.random() * 33 + 3);
+    const seconds = Math.round(Math.random() * 59);
+
+    const regex =
+      /(?:https?:\/\/)?youtu\.be\/([a-zA-Z0-9_-]{11})|(?:https?:\/\/www\.)?youtube\.com\/watch\?v\=([a-zA-Z0-9_-]{11})/;
+
+    const match = input.match(regex);
+
+    if (match) {
+      var videoID = match[1] || match[2];
+      setCallStatus(true);
+    } else {
+      setCallStatus(false);
+      setStatus(false);
+    }
+
+    function checkDuration() {
+      const duration = player.getDuration();
+      if (minutes === Math.floor(duration / 60) && seconds === duration % 60)
+        setStatus(true);
+    }
+    return (
+      <Rule
+        status={status}
+        description={`Your password must include the URL of a ${minutes} minute ${
+          seconds ? `${seconds} seconds` : ""
+        } long YouTube video. `}
+        index="24"
+      >
+        <div id="player" className={styles.player} />
+      </Rule>
+    );
+  },
+  function Rule28(input) {
+    const [hexCode, sethexCode] = useState(generateRandomHexColor());
+
+    const isFollowed = input === hexCode ? true : false;
+
+    function generateRandomHexColor() {
+      const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+      return `#${randomColor.padStart(6, "0")}`;
+    }
+    function hexCodeChanger() {
+      sethexCode(generateRandomHexColor());
+    }
+
+    return (
+      <Rule
+        status={isFollowed}
+        index="28"
+        description="Your password must include this color in hex"
+      >
+        <div className={styles.hexBox} style={{ backgroundColor: { hexCode } }}>
+          <img
+            src={refresh}
+            alt="refresh"
+            className={styles["hexBox-refresh"]}
+            onClick={hexCodeChanger}
+          />
+        </div>
+      </Rule>
+    );
+  },
 ];
 
 export default RulesList;

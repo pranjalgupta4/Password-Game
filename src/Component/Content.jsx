@@ -7,7 +7,7 @@ export default function Content() {
   const inputBoxRef = useRef(null);
   const [password, setPassword] = useState("");
   const [numRules, setNumRules] = useState(1);
-
+  
   const handleInput = () => {
     if (inputBoxRef.current) {
       inputBoxRef.current.style.height = "auto";
