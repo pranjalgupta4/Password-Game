@@ -5,13 +5,12 @@ import starbucks from "../../../public/Sponsers/starbucks.svg";
 import refresh from "../../../public/refresh.svg";
 import errorSvg from "../../../public/error.svg";
 import defaultCaptcha from "../../../public/default-captcha.png";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback ,useRef} from "react";
 import { googleMapList, countryNames } from "../assets/googleMapList";
 import { Chess } from "chess.js";
 import styles from "../Rules.module.css";
 import chessFens from "../assets/chessFens";
 import periodicTable from "../assets/periodicTable";
-import errorSvg from "/error.svg";
 
 const RulesList = [
   function Rule1(input) {

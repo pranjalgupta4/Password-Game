@@ -1,7 +1,7 @@
 import Rule from "./Rule";
 import RulesList from "./RulesList/RulesList";
 import style from "./Rules.module.css";
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 export default function Rules({ input, numRules, setNumRules }) {
   const activeRule = RulesList.slice(0, 18);
   const statusArrayRef = useRef([]);
@@ -27,7 +27,7 @@ export default function Rules({ input, numRules, setNumRules }) {
               </div>
             );
           } else {
-            return <></>;
+            return <React.Fragment key={index} />;
           }
         })}
       </div>
@@ -45,7 +45,7 @@ export default function Rules({ input, numRules, setNumRules }) {
               </div>
             );
           } else {
-            return <></>;
+            return <React.Fragment key={index} />;
           }
         })}
       </div>
