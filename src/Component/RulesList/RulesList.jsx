@@ -1,15 +1,16 @@
 import Rule from "../Rule";
-import pepsi from "../../../public/Sponsers/pepsi.svg";
-import shell from "../../../public/Sponsers/shell.svg";
-import starbucks from "../../../public/Sponsers/starbucks.svg";
-import refresh from "../../../public/refresh.svg";
-import defaultCaptcha from "../../../public/default-captcha.png";
+import pepsi from "/Sponsers/pepsi.svg";
+import shell from "/Sponsers/shell.svg";
+import starbucks from "/Sponsers/starbucks.svg";
+import refresh from "/refresh.svg";
+import defaultCaptcha from "/default-captcha.png";
 import { useState, useEffect, useCallback } from "react";
 import { googleMapList, countryNames } from "../assets/googleMapList";
 import { Chess } from "chess.js";
 import styles from "../Rules.module.css";
 import chessFens from "../assets/chessFens";
 import periodicTable from "../assets/periodicTable";
+import errorSvg from "/error.svg";
 
 const RulesList = [
   function Rule1(input) {
@@ -265,7 +266,7 @@ const RulesList = [
       wordleHandler();
     }, [wordleHandler]);
 
-    const reg = new RegExp(`${wordleAnswer}`, g, i);
+    const reg = new RegExp(`${wordleAnswer}`, "g", "i");
     const isFollowed = input.match(reg) ? true : false;
     return {
       comp: (
@@ -304,33 +305,33 @@ const RulesList = [
       "Last Quarter": "🌗",
       "Waning Crescent": "🌘",
     };
-    const [moonPhase, setMoonPhase] = useState();
-    const moonPhaseHandler = useCallback(async function () {
-      const url =
-        "https://luna-phase.p.rapidapi.com/Luna_Phase?lat=51.5074&lon=-0.1278";
-      const options = {
-        method: "GET",
-        headers: {
-          "x-rapidapi-key":
-            "998d74b152msh2918a57284edac0p14b823jsne20ebe1c7d0c",
-          "x-rapidapi-host": "luna-phase.p.rapidapi.com",
-        },
-      };
+    const [moonPhase, setMoonPhase] = useState("🌑");
+    // const moonPhaseHandler = useCallback(async function () {
+    //   const url =
+    //     "https://luna-phase.p.rapidapi.com/Luna_Phase?lat=51.5074&lon=-0.1278";
+    //   const options = {
+    //     method: "GET",
+    //     headers: {
+    //       "x-rapidapi-key":
+    //         "998d74b152msh2918a57284edac0p14b823jsne20ebe1c7d0c",
+    //       "x-rapidapi-host": "luna-phase.p.rapidapi.com",
+    //     },
+    //   };
 
-      try {
-        const response = await fetch(url, options);
-        if (!response.ok) {
-          throw new Error("Something went wrong :: " + response.status);
-        }
-        const result = await response.json();
-        setMoonPhase(result.Phase_Description);
-      } catch (error) {
-        console.error(error);
-      }
-    });
-    useEffect(() => {
-      moonPhaseHandler();
-    }, [moonPhaseHandler]);
+    //   try {
+    //     const response = await fetch(url, options);
+    //     if (!response.ok) {
+    //       throw new Error("Something went wrong :: " + response.status);
+    //     }
+    //     const result = await response.json();
+    //     setMoonPhase(result.Phase_Description);
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // });
+    // useEffect(() => {
+    //   moonPhaseHandler();
+    // }, [moonPhaseHandler]);
 
     const reg = new RegExp(moonPhaseObject[moonPhase]);
     const isFollowed = input.match(reg) ? true : false;
@@ -392,20 +393,23 @@ const RulesList = [
     const reg = /\d+/g;
     const nums = input.match(reg);
     let check = false;
-    nums.forEach((num) => {
-      if (num % 400 == 0) {
-        check = true;
-      } else if (num % 4 == 0 && num % 100 != 0) {
-        check = true;
-      }
-    });
+    if (nums) {
+      nums.forEach((num) => {
+        if (num % 400 == 0) {
+          check = true;
+        } else if (num % 4 == 0 && num % 100 != 0) {
+          check = true;
+        }
+      });
+    }
+
     const isFollowed = check;
     return {
       comp: (
         <Rule
           status={isFollowed}
           index="15"
-          description="Your password must include the current phase of the moon as an emoji."
+          description="Your password must include a leap year."
         />
       ),
       isFollowed,
@@ -519,20 +523,23 @@ const RulesList = [
     function calculateTotalAtomicMass(input) {
       const reg = /[A-Z][a-z]?/g;
       const matches = input.match(reg);
+      if (matches) {
+        return matches.reduce((total, symbol) => {
+          const fullElement = periodicTable[symbol];
 
-      return matches.reduce((total, symbol) => {
-        const fullElement = periodicTable[symbol];
+          if (fullElement) {
+            return total + Math.round(parseFloat(fullElement.atomicMass));
+          } else {
+            const singleElement = periodicTable[symbol[0]];
 
-        if (fullElement) {
-          return total + Math.round(parseFloat(fullElement.atomicMass));
-        } else {
-          const singleElement = periodicTable[symbol[0]];
-
-          return singleElement
-            ? total + Math.round(parseFloat(singleElement.atomicMass))
-            : total;
-        }
-      }, 0);
+            return singleElement
+              ? total + Math.round(parseFloat(singleElement.atomicMass))
+              : total;
+          }
+        }, 0);
+      } else {
+        return 0;
+      }
     }
 
     const totalMass = calculateTotalAtomicMass(input);
