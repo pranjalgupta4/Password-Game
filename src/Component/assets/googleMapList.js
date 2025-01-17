@@ -117,7 +117,7 @@ const googleMapList = [
     title: "Iceland",
     link: "https://www.google.com/maps/@64.7826033,-21.5608493,3a,75y,65.64h,91.3t/data=!3m8!1e1!3m6!1sAF1QipO1f6D2pcMk2a5EoVY_3DZGkxUclie2vhCA6SEt!2e10!3e11!6shttps:%2F%2Flh5.googleusercontent.com%2Fp%2FAF1QipO1f6D2pcMk2a5EoVY_3DZGkxUclie2vhCA6SEt%3Dw203-h100-k-no-pi-5.0643086-ya304.05145-ro-0-fo100!7i8704!8i4352?entry=ttu",
     embed:
-      "https://www.google.com/maps/embed?pb=!4v1686332631583!6m8!1m7!1sCAoSLEFGMVFpcE8xZjZEMnBjTWsyYTVFb1ZZXzNEWkdreFVjbGllMnZoQ0E2U0V0!2m2!1d64.78260329999999!2d-21.5608493!3f65.64!4f1.2999999999999972!5f0.7820865974627469",
+      "https://www.google.com/maps/embed?pb=!4v1737103762347!6m8!1m7!1sYK26LsJIdwQVm8QEsalZVA!2m2!1d64.79159010922616!2d-14.00421918724509!3f292.70837527222375!4f-20.02506955587009!5f0.7820865974627469",
   },
   {
     title: "Indonesia",
@@ -345,7 +345,7 @@ const googleMapList = [
     title: "Malaysia",
     link: "https://www.google.com/maps/@3.2375917,101.684043,3a,90y,7.13h,116.58t/data=!3m8!1e1!3m6!1sAF1QipNCtfgdaFJRxi3C4YPLoBPdwp3ba8gYPG_UHoHd!2e10!3e11!6shttps:%2F%2Flh5.googleusercontent.com%2Fp%2FAF1QipNCtfgdaFJRxi3C4YPLoBPdwp3ba8gYPG_UHoHd%3Dw203-h100-k-no-pi-0-ya290.8275-ro0-fo100!7i8704!8i4352?entry=ttu",
     embed:
-      "https://www.google.com/maps/embed?pb=!4v1687119309719!6m8!1m7!1sCAoSLEFGMVFpcE5DdGZnZGFGSlJ4aTNDNFlQTG9CUGR3cDNiYThnWVBHX1VIb0hk!2m2!1d3.2375917!2d101.684043!3f7.13!4f26.58!5f0.4000000000000002",
+      "https://www.google.com/maps/embed?pb=!4v1737105168184!6m8!1m7!1svrlEu9kaR_TEtLuZyozoDQ!2m2!1d4.3830218778894!2d102.4030295293038!3f75.0438410717272!4f-9.113094204089066!5f0.7820865974627469",
   },
   {
     title: "Netherlands",

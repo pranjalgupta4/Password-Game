@@ -44,6 +44,7 @@
 }
 .marginTop {
   margin: 10px 0 0 0;
+  display: inline;
 }
 .rule-div-img {
   height: 85px;

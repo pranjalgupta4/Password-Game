@@ -3,6 +3,7 @@ import pepsi from "../../../public/Sponsers/pepsi.svg";
 import shell from "../../../public/Sponsers/shell.svg";
 import starbucks from "../../../public/Sponsers/starbucks.svg";
 import refresh from "../../../public/refresh.svg";
+import errorSvg from "../../../public/error.svg";
 import defaultCaptcha from "../../../public/default-captcha.png";
 import { useState, useEffect, useCallback } from "react";
 import { googleMapList, countryNames } from "../assets/googleMapList";
@@ -346,14 +347,15 @@ const RulesList = [
     };
   },
   function Rule14(input) {
-    const place = googleMapList[Math.floor(Math.random() * 64)];
-    const reg = new RegExp(place.title, "gi");
+    let isFollowed = false;
     const countries = [];
+    const place = useRef(googleMapList[Math.floor(Math.random() * 64)]);
+    const reg = new RegExp(place.current.title, "gi");
     countryNames.map((name) => {
       const reg2 = new RegExp(name, "gi");
       input.match(reg2) && countries.push(name);
     });
-    const isFollowed = input.match(reg) ? true : false;
+    isFollowed = input.match(reg) ? true : false;
 
     return {
       comp: (
@@ -366,21 +368,22 @@ const RulesList = [
             <div className={styles.marginTop}>
               {countries.map((ele) => {
                 return (
-                  <>
+                  <div key={ele}>
                     <img
                       src={errorSvg}
                       alt="errorSvg"
                       className={styles.errorSvg}
                     />
                     {ele}
-                  </>
+                  </div>
                 );
               })}
             </div>
           )}
+
           <iframe
             className={styles.googlemap}
-            src={place.embed}
+            src={place.current.embed}
             loading="lazy"
           />
         </Rule>
@@ -428,23 +431,32 @@ const RulesList = [
     const reg = /([KQRBN]?x?[a-h][1-8](\=[QRBN])?|O-O(-O)?)\+?\#?/g;
     let status = false;
     let element = [];
-    const index = Math.floor(Math.random() * 192);
+
+    const index = useRef(Math.floor(Math.random() * 192));
 
     if (input.match(reg)) {
       const moves = input.match(reg);
       moves.map((move) => {
         try {
           const chess = new Chess();
-          chess.load(chessFens[index].fen);
+          chess.load(chessFens[index.current].fen);
           const validMove = chess.move(move);
 
           if (validMove) {
-            const newReg2 = new RegExp(validMove.san);
+            const newReg2 = new RegExp(
+              validMove.san.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+            );
             if (!move.match(newReg2)) {
               element.push(<p>{move} (Invalid Notation)</p>);
               status = false;
             } else {
-              const newReg = new RegExp(chessFens[index].sol, "g");
+              const newReg = new RegExp(
+                chessFens[index.current].sol.replace(
+                  /[.*+?^${}()|[\]\\]/g,
+                  "\\$&"
+                ),
+                "g"
+              );
               if (move.match(newReg)) {
                 status = true;
               } else {
@@ -471,25 +483,27 @@ const RulesList = [
               <div className={styles.marginTop}>
                 {element.map((ele) => {
                   return (
-                    <>
+                    <div key={ele}>
                       <img
                         src={errorSvg}
                         alt="errorSvg"
                         className={styles.errorSvg}
                       />
                       {ele}
-                    </>
+                    </div>
                   );
                 })}
               </div>
             )}
             <img
-              src={`https://fen2image.chessvision.ai/${chessFens[index].fen}`}
+              src={`https://fen2image.chessvision.ai/${
+                chessFens[index.current].fen
+              }`}
               alt="Chessboard"
               className={styles["chessboard-img"]}
             />
 
-            {chessFens[index].fen.match(/\sb\s/g) ? (
+            {chessFens[index.current].fen.match(/\sb\s/g) ? (
               <p className={styles["chessboard-p"]}>Black to move</p>
             ) : (
               <p className={styles["chessboard-p"]}>White to move</p>
