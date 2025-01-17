@@ -256,7 +256,6 @@ const RulesList = [
           throw new Error("Something went wrong :: " + response.status);
         }
         const result = await response.json();
-        console.log(result);
         setWordleAnswer(result.solution);
       } catch (error) {
         console.error(error);
