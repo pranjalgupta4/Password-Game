@@ -253,6 +253,7 @@ const RulesList = [
 
       try {
         const response = await fetch(url);
+        console.log(response);
         if (!response.ok) {
           throw new Error("Something went wrong :: " + response.status);
         }
@@ -261,6 +262,7 @@ const RulesList = [
       } catch (error) {
         console.error(error);
       }
+      console.log(wordleAnswer);
     }, []);
 
     useEffect(() => {
