@@ -43,3 +43,14 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+.inputBoxDiv {
+  position: relative;
+}
+
+.inputBoxDivP {
+  position: absolute;
+  top: 50%;
+  right: -5%;
+  transform: translateY(-50%);
+}

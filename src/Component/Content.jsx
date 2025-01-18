@@ -1,12 +1,15 @@
 import style from "./Content.module.css";
 import gameTitle from "/gametitle.svg";
 import Rules from "./Rules";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import GraphemeSplitter from "grapheme-splitter";
 
 export default function Content() {
   const inputBoxRef = useRef(null);
   const [password, setPassword] = useState("");
   const [numRules, setNumRules] = useState(1);
+  const [wordCount, setwordCount] = useState(0);
+  let splitter = new GraphemeSplitter();
 
   const handleInput = () => {
     if (inputBoxRef.current) {
@@ -15,6 +18,9 @@ export default function Content() {
       setPassword(inputBoxRef.current.value);
     }
   };
+  useEffect(() => {
+    setwordCount(splitter.countGraphemes(password));
+  }, [password]);
 
   return (
     <div className={style.contentArea}>
@@ -31,6 +37,7 @@ export default function Content() {
             name="textarea"
             className={style.inputBox}
           ></textarea>
+          <p className={style.inputBoxDivP}>{wordCount}</p>
         </div>
         <Rules
           input={password}

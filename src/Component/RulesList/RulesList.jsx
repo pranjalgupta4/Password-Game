@@ -4,7 +4,8 @@ import shell from "/Sponsers/shell.svg";
 import starbucks from "/Sponsers/starbucks.svg";
 import refresh from "/refresh.svg";
 import defaultCaptcha from "/default-captcha.png";
-import { useState, useEffect, useCallback } from "react";
+import errorSvg from "/error.svg";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { googleMapList, countryNames } from "../assets/googleMapList";
 import { Chess } from "chess.js";
 import styles from "../Rules.module.css";
@@ -534,6 +535,7 @@ const RulesList = [
   },
   function Rule18(input) {
     let status = false;
+
     function calculateTotalAtomicMass(input) {
       const reg = /[A-Z][a-z]?/g;
       const matches = input.match(reg);
@@ -572,31 +574,39 @@ const RulesList = [
       isFollowed,
     };
   },
-  function Rule18(input) {
-    const reg = /🏋️‍♂️/g;
-    const matches = input.match(reg);
-    const count = matches ? matches.length : 0;
-    let classUsed = styles["bar-quarter"];
-    let isFollowed = false;
-    if (count === 1) {
-      classUsed = styles["bar-Half"];
-    } else if (count === 2) {
-      classUsed = styles["bar-last-Quarter"];
-    } else {
-      classUsed = styles["bar-full"];
-      isFollowed = true;
-    }
-    return {
-      comp: (
-        <Rule
-          status={isFollowed}
-          description="Your password is not strong enough 🏋️‍♂️"
-          index="18"
-        />
-      ),
-      isFollowed,
-    };
-  },
+ function Rule21(input) {
+   const reg = /🏋️‍♂️/g;
+   const matches = input.match(reg);
+   const count = matches ? matches.length : 0;
+   let classUsed = styles["bar-quarter"];
+   let isFollowed = false;
+   if (count === 1) {
+     classUsed = styles["bar-Half"];
+   } else if (count === 2) {
+     classUsed = styles["bar-three-Quarter"];
+   } else if (count >= 3) {
+     classUsed = styles["bar-full"];
+     isFollowed = true;
+   }
+   return {
+     comp: (
+       <Rule
+         status={isFollowed}
+         description="Your password is not strong enough 🏋️‍♂️"
+         index="21"
+       >
+         <div className={styles["strength-bar"]}>
+           <div className={classUsed + " " + styles["strength-bar-sub"]}></div>
+           <span className={styles.bar + " " + styles.bar1}></span>
+           <span className={styles.bar + " " + styles.bar2}></span>
+           <span className={styles.bar + " " + styles.bar3}></span>
+           <span className={styles.bar + " " + styles.bar4}></span>
+         </div>
+       </Rule>
+     ),
+     isFollowed,
+   };
+ },
   function Rule22(input) {
     const description = (
       <>
@@ -705,6 +715,80 @@ const RulesList = [
         </div>
       </Rule>
     );
+  },
+  function Rule32(input) {
+    let splitter = new GraphemeSplitter();
+    let isFollowed = input
+      .match(/\d+/g)
+      ?.some((number) => splitter.countGraphemes(input) === parseInt(number));
+
+    isFollowed = isFollowed ?? false;
+
+    return {
+      comp: (
+        <Rule
+          status={isFollowed}
+          index="32"
+          description="Your password must include the length of your password."
+        />
+      ),
+      isFollowed,
+    };
+  },
+  function Rule33(input) {
+    let splitter = new GraphemeSplitter();
+    function isPrime(num) {
+      if (num <= 1) return false;
+      if (num <= 3) return true;
+      if (num % 2 === 0 || num % 3 === 0) return false;
+      for (let i = 5; i * i <= num; i += 6) {
+        if (num % i === 0 || num % (i + 2) === 0) return false;
+      }
+      return true;
+    }
+
+    const inputLength = splitter.countGraphemes(input);
+    let isFollowed = input
+      .match(/\d+/g)
+      ?.some(
+        (number) => inputLength === parseInt(number) && isPrime(inputLength)
+      );
+
+    isFollowed = isFollowed ?? false;
+
+    return {
+      comp: (
+        <Rule
+          status={isFollowed}
+          index="33"
+          description="The length of your password must be a prime number."
+        />
+      ),
+      isFollowed,
+    };
+  },
+  function Rule35(input) {
+    const currentTime = new Date();
+    const hours = currentTime.getHours().toString();
+    const minutes = currentTime.getMinutes().toString().padStart(2, "0");
+    const reg = /(1?[0-9]|2[0-3])\:([0-5][0-9])/g;
+
+    let isFollowed = input
+      .match(reg)
+      ?.some((time) => `${hours}:${minutes}` === time);
+
+    isFollowed = isFollowed ?? false;
+
+    return {
+      comp: (
+        <Rule
+          status={isFollowed}
+          index="35"
+          description="Your password must include the current time."
+        />
+      ),
+      isFollowed,
+    };
   },
 ];
 

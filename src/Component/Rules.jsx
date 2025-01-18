@@ -2,6 +2,7 @@ import Rule from "./Rule";
 import RulesList from "./RulesList/RulesList";
 import style from "./Rules.module.css";
 import React, { useEffect, useRef } from "react";
+
 export default function Rules({ input, numRules, setNumRules }) {
   const activeRule = RulesList.slice(0, 18);
   const statusArrayRef = useRef([]);
@@ -11,6 +12,7 @@ export default function Rules({ input, numRules, setNumRules }) {
       setNumRules((prev) => prev + 1);
     }
   }, [input, setNumRules, numRules]);
+
   return (
     <div className={style.rules}>
       <div className={style.followed}>
