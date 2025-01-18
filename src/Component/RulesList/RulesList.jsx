@@ -572,6 +572,31 @@ const RulesList = [
       isFollowed,
     };
   },
+  function Rule18(input) {
+    const reg = /🏋️‍♂️/g;
+    const matches = input.match(reg);
+    const count = matches ? matches.length : 0;
+    let classUsed = styles["bar-quarter"];
+    let isFollowed = false;
+    if (count === 1) {
+      classUsed = styles["bar-Half"];
+    } else if (count === 2) {
+      classUsed = styles["bar-last-Quarter"];
+    } else {
+      classUsed = styles["bar-full"];
+      isFollowed = true;
+    }
+    return {
+      comp: (
+        <Rule
+          status={isFollowed}
+          description="Your password is not strong enough 🏋️‍♂️"
+          index="18"
+        />
+      ),
+      isFollowed,
+    };
+  },
   function Rule22(input) {
     const description = (
       <>
