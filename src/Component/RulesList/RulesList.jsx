@@ -11,6 +11,7 @@ import { Chess } from "chess.js";
 import styles from "../Rules.module.css";
 import chessFens from "../assets/chessFens";
 import periodicTable from "../assets/periodicTable";
+import { createPortal } from "react-dom";
 
 const RulesList = [
   function Rule1(input) {
@@ -247,9 +248,9 @@ const RulesList = [
       // const year = today.getFullYear();
       // const month = String(today.getMonth() + 1).padStart(2, "0");
       // const day = String(today.getDate()).padStart(2, "0");
+      // const url = `https://proxy.corsfix.com/?https://www.nytimes.com/svc/wordle/v2/${year}-${month}-${day}.json`;
 
       const url = "/api/wordle";
-      // const url = `https://proxy.corsfix.com/?https://www.nytimes.com/svc/wordle/v2/${year}-${month}-${day}.json`;
 
       try {
         const response = await fetch(url);
@@ -520,15 +521,31 @@ const RulesList = [
     };
   },
   function Rule17(input) {
+    const [isPaulIn, setIsPaulIn] = useState(false);
     const reg = /🥚/g;
     const isFollowed = input.match(reg) ? true : false;
+    if (isFollowed && !isPaulIn) {
+      setIsPaulIn(true);
+    }
+
     return {
       comp: (
-        <Rule
-          status={isFollowed}
-          index="17"
-          description="🥚 ← This is my chicken Paul. He hasn’t hatched yet, please put him in your password and keep him safe."
-        />
+        <>
+          <Rule
+            status={isFollowed}
+            index="17"
+            description="🥚 ← This is my chicken Paul. He hasn’t hatched yet, please put him in your password and keep him safe."
+          />
+          {isPaulIn &&
+            !isFollowed &&
+            createPortal(
+              <div>
+                <div className="bg-paul-msg"></div>
+                <div className="paul-msg">PAUL HAS BEEN SLAIN</div>{" "}
+              </div>,
+              document.getElementById("gameover-screen")
+            )}
+        </>
       ),
       isFollowed,
     };
@@ -574,39 +591,39 @@ const RulesList = [
       isFollowed,
     };
   },
- function Rule21(input) {
-   const reg = /🏋️‍♂️/g;
-   const matches = input.match(reg);
-   const count = matches ? matches.length : 0;
-   let classUsed = styles["bar-quarter"];
-   let isFollowed = false;
-   if (count === 1) {
-     classUsed = styles["bar-Half"];
-   } else if (count === 2) {
-     classUsed = styles["bar-three-Quarter"];
-   } else if (count >= 3) {
-     classUsed = styles["bar-full"];
-     isFollowed = true;
-   }
-   return {
-     comp: (
-       <Rule
-         status={isFollowed}
-         description="Your password is not strong enough 🏋️‍♂️"
-         index="21"
-       >
-         <div className={styles["strength-bar"]}>
-           <div className={classUsed + " " + styles["strength-bar-sub"]}></div>
-           <span className={styles.bar + " " + styles.bar1}></span>
-           <span className={styles.bar + " " + styles.bar2}></span>
-           <span className={styles.bar + " " + styles.bar3}></span>
-           <span className={styles.bar + " " + styles.bar4}></span>
-         </div>
-       </Rule>
-     ),
-     isFollowed,
-   };
- },
+  function Rule21(input) {
+    const reg = /🏋️‍♂️/g;
+    const matches = input.match(reg);
+    const count = matches ? matches.length : 0;
+    let classUsed = styles["bar-quarter"];
+    let isFollowed = false;
+    if (count === 1) {
+      classUsed = styles["bar-Half"];
+    } else if (count === 2) {
+      classUsed = styles["bar-three-Quarter"];
+    } else if (count >= 3) {
+      classUsed = styles["bar-full"];
+      isFollowed = true;
+    }
+    return {
+      comp: (
+        <Rule
+          status={isFollowed}
+          description="Your password is not strong enough 🏋️‍♂️"
+          index="21"
+        >
+          <div className={styles["strength-bar"]}>
+            <div className={classUsed + " " + styles["strength-bar-sub"]}></div>
+            <span className={styles.bar + " " + styles.bar1}></span>
+            <span className={styles.bar + " " + styles.bar2}></span>
+            <span className={styles.bar + " " + styles.bar3}></span>
+            <span className={styles.bar + " " + styles.bar4}></span>
+          </div>
+        </Rule>
+      ),
+      isFollowed,
+    };
+  },
   function Rule22(input) {
     const description = (
       <>
