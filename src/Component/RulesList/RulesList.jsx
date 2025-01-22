@@ -244,13 +244,13 @@ const RulesList = [
     const [wordleAnswer, setWordleAnswer] = useState();
 
     const wordleHandler = useCallback(async function () {
-      // const today = new Date();
-      // const year = today.getFullYear();
-      // const month = String(today.getMonth() + 1).padStart(2, "0");
-      // const day = String(today.getDate()).padStart(2, "0");
-      // const url = `https://proxy.corsfix.com/?https://www.nytimes.com/svc/wordle/v2/${year}-${month}-${day}.json`;
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = String(today.getMonth() + 1).padStart(2, "0");
+      const day = String(today.getDate()).padStart(2, "0");
+      const url = `https://proxy.corsfix.com/?https://www.nytimes.com/svc/wordle/v2/${year}-${month}-${day}.json`;
 
-      const url = "/api/wordle";
+      // const url = "/api/wordle";
 
       try {
         const response = await fetch(url);
@@ -283,7 +283,7 @@ const RulesList = [
   },
   function Rule12(input) {
     const reg =
-      /(He|Li|Be|Ne|Na|Mg|Al|Si|Cl|Ar|Ca|Sc|Ti|Cr|Mn|Fe|Co|Ni|Cu|Zn|Ga|Ge|As|Se|Br|Kr|Rb|Sr|Zr|Nb|Mo|Tc|Ru|Rh|Pd|Ag|Cd|In|Sn|Sb|Te|Xe|Cs|Ba|La|Ce|Pr|Nd|Pm|Sm|Eu|Gd|Tb|Dy|Ho|Er|Tm|Yb|Lu|Hf|Ta|W|Re|Os|Ir|Pt|Au|Hg|Tl|Pb|Bi|Po|At|Rn|Fr|Ra|Ac|Th|Pa|Np|Pu|Am|Cm|Bk|Cf|Es|Fm|Md|No|Lr|Rf|Db|Sg|Bh|Hs|Mt|Ds|Rg|Cn|Fl|Lv|Ts|Og)/g;
+      /(He|Li|Be|Ne|Na|Mg|Al|Si|Cl|Ar|Ca|Sc|Ti|Cr|Mn|Fe|Co|Ni|Cu|Zn|Ga|Ge|As|Se|Br|Kr|Rb|Sr|Zr|Nb|Mo|Tc|Ru|Rh|Pd|Ag|Cd|In|Sn|Sb|Te|Xe|Cs|Ba|La|Ce|Pr|Nd|Pm|Sm|Eu|Gd|Tb|Dy|Ho|Er|Tm|Yb|Lu|Hf|Ta|Re|Os|Ir|Pt|Au|Hg|Tl|Pb|Bi|Po|At|Rn|Fr|Ra|Ac|Th|Pa|Np|Pu|Am|Cm|Bk|Cf|Es|Fm|Md|No|Lr|Rf|Db|Sg|Bh|Hs|Mt|Ds|Rg|Cn|Fl|Lv|Ts|Og)/g;
     const isFollowed = input.match(reg) ? true : false;
     return {
       comp: (
@@ -307,7 +307,7 @@ const RulesList = [
       "Last Quarter": "🌗",
       "Waning Crescent": "🌘",
     };
-    const [moonPhase, setMoonPhase] = useState("🌑");
+    const [moonPhase, setMoonPhase] = useState("New Moon");
     // const moonPhaseHandler = useCallback(async function () {
     //   const url =
     //     "https://luna-phase.p.rapidapi.com/Luna_Phase?lat=51.5074&lon=-0.1278";
@@ -636,14 +636,19 @@ const RulesList = [
       </>
     );
     const reg = /I am (loved|worthy|enough)/gi;
+    const isFollowed = input.match(reg) ? true : false;
 
-    return (
-      <Rule
-        status={input.match(reg) ? true : false}
-        description={description}
-        index="22"
-      />
-    );
+    return {
+      comp: <Rule status={isFollowed} description={description} index="22" />,
+      isFollowed,
+    };
+  },
+  function Rule23(input) {
+    const isFollowed = false;
+    return {
+      comp: <></>,
+      isFollowed,
+    };
   },
   function Rule24(input) {
     const [status, setStatus] = useState(false);
@@ -691,17 +696,21 @@ const RulesList = [
       if (minutes === Math.floor(duration / 60) && seconds === duration % 60)
         setStatus(true);
     }
-    return (
-      <Rule
-        status={status}
-        description={`Your password must include the URL of a ${minutes} minute ${
-          seconds ? `${seconds} seconds` : ""
-        } long YouTube video. `}
-        index="24"
-      >
-        <div id="player" className={styles.player} />
-      </Rule>
-    );
+    const isFollowed = status;
+    return {
+      comp: (
+        <Rule
+          status={isFollowed}
+          description={`Your password must include the URL of a ${minutes} minute ${
+            seconds ? `${seconds} seconds` : ""
+          } long YouTube video. `}
+          index="24"
+        >
+          <div id="player" className={styles.player} />
+        </Rule>
+      ),
+      isFollowed,
+    };
   },
   function Rule28(input) {
     const [hexCode, sethexCode] = useState(generateRandomHexColor());
