@@ -5,17 +5,19 @@ import starbucks from "/Sponsers/starbucks.svg";
 import refresh from "/refresh.svg";
 import defaultCaptcha from "/default-captcha.png";
 import errorSvg from "/error.svg";
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, useContext } from "react";
 import { googleMapList, countryNames } from "../assets/googleMapList";
 import { Chess } from "chess.js";
 import styles from "../Rules.module.css";
 import chessFens from "../assets/chessFens";
 import periodicTable from "../assets/periodicTable";
 import { createPortal } from "react-dom";
+import AuthContext from "../../store/auth-context";
 
 const RulesList = [
   function Rule1(input) {
-    const isFollowed = input.length >= 5 ? true : false;
+    const ctx = useContext(AuthContext);
+    const isFollowed = ctx.wordCount >= 5 ? true : false;
     return {
       comp: (
         <Rule
@@ -282,9 +284,15 @@ const RulesList = [
     };
   },
   function Rule12(input) {
-    const reg =
-      /(He|Li|Be|Ne|Na|Mg|Al|Si|Cl|Ar|Ca|Sc|Ti|Cr|Mn|Fe|Co|Ni|Cu|Zn|Ga|Ge|As|Se|Br|Kr|Rb|Sr|Zr|Nb|Mo|Tc|Ru|Rh|Pd|Ag|Cd|In|Sn|Sb|Te|Xe|Cs|Ba|La|Ce|Pr|Nd|Pm|Sm|Eu|Gd|Tb|Dy|Ho|Er|Tm|Yb|Lu|Hf|Ta|Re|Os|Ir|Pt|Au|Hg|Tl|Pb|Bi|Po|At|Rn|Fr|Ra|Ac|Th|Pa|Np|Pu|Am|Cm|Bk|Cf|Es|Fm|Md|No|Lr|Rf|Db|Sg|Bh|Hs|Mt|Ds|Rg|Cn|Fl|Lv|Ts|Og)/g;
-    const isFollowed = input.match(reg) ? true : false;
+    let isFollowed = false;
+    const reg = /[A-Z][a-z]/g;
+    const matches = input.match(reg);
+    Object.keys(periodicTable).map((ele) => {
+      matches.map((ele2) => {
+        if (ele === ele2) isFollowed = true;
+      });
+    });
+
     return {
       comp: (
         <Rule

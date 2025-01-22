@@ -1,11 +1,13 @@
 import Rule from "./Rule";
 import RulesList from "./RulesList/RulesList";
 import style from "./Rules.module.css";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useContext } from "react";
+import AuthContext from "../store/auth-context";
 
-export default function Rules({ input, numRules, setNumRules }) {
+export default function Rules({ input, numRules, setNumRules, setInput }) {
   const activeRule = RulesList.slice(0, 18);
   const statusArrayRef = useRef([]);
+
   useEffect(() => {
     const statusSlice = statusArrayRef.current.slice(0, numRules);
     if (!statusSlice.includes(false)) {
@@ -17,7 +19,7 @@ export default function Rules({ input, numRules, setNumRules }) {
     <div className={style.rules}>
       <div className={style.followed}>
         {activeRule.map((func, index) => {
-          const temp = func(input);
+          const temp = func(input, numRules);
           statusArrayRef.current[index] = temp.isFollowed;
           if (temp.isFollowed) {
             return (
@@ -35,7 +37,7 @@ export default function Rules({ input, numRules, setNumRules }) {
       </div>
       <div className={style.unfollowed}>
         {activeRule.map((func, index) => {
-          const temp = func(input);
+          const temp = func(input, numRules);
           statusArrayRef.current[index] = temp.isFollowed;
           if (!temp.isFollowed) {
             return (

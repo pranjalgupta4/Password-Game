@@ -3,6 +3,7 @@ import gameTitle from "/gametitle.svg";
 import Rules from "./Rules";
 import { useEffect, useRef, useState } from "react";
 import GraphemeSplitter from "grapheme-splitter";
+import AuthContext from "../store/auth-context";
 
 export default function Content() {
   const inputBoxRef = useRef(null);
@@ -23,28 +24,37 @@ export default function Content() {
   }, [password]);
 
   return (
-    <div className={style.contentArea}>
-      <div className={style.gameTitleDiv}>
-        <img src={gameTitle} alt="Password Game" className={style.gameTitle} />
-      </div>
-      <div className={style.inputArea}>
-        <div className={style.inputLabel}>Please choose a password</div>
-        <div className={style.inputBoxDiv}>
-          <textarea
-            onChange={handleInput}
-            ref={inputBoxRef}
-            rows={1}
-            name="textarea"
-            className={style.inputBox}
-          ></textarea>
-          <p className={style.inputBoxDivP}>{wordCount}</p>
+    <AuthContext.Provider
+      value={{ setInput: setPassword, wordCount: wordCount }}
+    >
+      <div className={style.contentArea}>
+        <div className={style.gameTitleDiv}>
+          <img
+            src={gameTitle}
+            alt="Password Game"
+            className={style.gameTitle}
+          />
         </div>
-        <Rules
-          input={password}
-          numRules={numRules}
-          setNumRules={setNumRules}
-        ></Rules>
+        <div className={style.inputArea}>
+          <div className={style.inputLabel}>Please choose a password</div>
+          <div className={style.inputBoxDiv}>
+            <textarea
+              onChange={handleInput}
+              ref={inputBoxRef}
+              rows={1}
+              name="textarea"
+              className={style.inputBox}
+              value={password}
+            ></textarea>
+            <p className={style.inputBoxDivP}>{wordCount}</p>
+          </div>
+          <Rules
+            input={password}
+            numRules={numRules}
+            setNumRules={setNumRules}
+          ></Rules>
+        </div>
       </div>
-    </div>
+    </AuthContext.Provider>
   );
 }
