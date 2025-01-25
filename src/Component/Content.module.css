@@ -56,7 +56,28 @@
 }
 
 
-.joditEditor {
-  clip-path: inset(0 0 20% 0);
-  border: 2px solid black !important;
+.joditEditor :global(.jodit-container) {
+  min-height: unset !important;
+  
+  border-radius: 10px !important;
+}
+
+.joditEditor :global(.jodit-workplace) {
+  min-height: unset !important;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.joditEditor :global(.jodit-wysiwyg) {
+  min-height: unset !important;
+  height: 65px !important;
+  border-radius: 10px;
+  font-family: "Arial, Helvetica, sans-serif";
+  font-size: "28px";
+  -ms-overflow-style: none;
+}
+
+.joditEditor :global(.jodit-wysiwyg)::-webkit-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

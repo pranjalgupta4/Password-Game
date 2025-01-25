@@ -13,9 +13,18 @@ export default function Content() {
     // readonly: false,
     // toolbarButtonSize: "middle",
     buttons: ["bold"],
+    placeholder: " ",
     // toolbarAdaptive: false,
-    showXPathInStatusbar: false,
+    statusbar: false,
     toolbar: false,
+    minHeight: null,
+    height: "65px",
+    width: "485px",
+    style: {
+      fontFamily: "Arial",
+      fontSize: "28px",
+    },
+    resize: null,
   };
 
   const inputBoxRef = useRef(null);
@@ -24,11 +33,18 @@ export default function Content() {
   const [wordCount, setwordCount] = useState(0);
   let splitter = new GraphemeSplitter();
 
-  const handleInput = () => {
-    if (inputBoxRef.current) {
-      inputBoxRef.current.style.height = "auto";
-      inputBoxRef.current.style.height = `${inputBoxRef.current.scrollHeight}px`;
-      setPassword(inputBoxRef.current.value);
+  const handleInput = (newContent) => {
+    setContent(newContent);
+    setPassword(newContent);
+
+    // Get editor instance
+    if (editor.current?.editor) {
+      const wysiwyg =
+        editor.current.editor.workplace.querySelector(".jodit-wysiwyg");
+      if (wysiwyg) {
+        wysiwyg.style.height = "auto";
+        wysiwyg.style.height = `${wysiwyg.scrollHeight}px`;
+      }
     }
   };
   useEffect(() => {
@@ -50,15 +66,16 @@ export default function Content() {
         <div className={style.inputArea}>
           <div className={style.inputLabel}>Please choose a password</div>
           <div className={style.inputBoxDiv}>
-            <textarea
+            {/* <textarea
               onChange={handleInput}
               ref={inputBoxRef}
               rows={1}
               name="textarea"
               className={style.inputBox}
               value={password}
-            ></textarea>
+            ></textarea> */}
             <JoditEditor
+              onChange={handleInput}
               ref={editor}
               value={content}
               config={config}
