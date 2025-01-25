@@ -54,3 +54,9 @@
   right: -5%;
   transform: translateY(-50%);
 }
+
+
+.joditEditor {
+  clip-path: inset(0 0 20% 0);
+  border: 2px solid black !important;
+}

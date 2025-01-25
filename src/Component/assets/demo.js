@@ -1,4 +1,8 @@
 import periodicTable from "./periodicTable.js";
 
-let s = "HEflkasdHeJk";
-console.log(s.match(/[A-Z][a-z]/g));
+let matches = "jdsfkjHejflajNa701985019la".match(/[A-Z][a-z]/g);
+Object.keys(periodicTable).map((ele) => {
+  matches.map((ele2) => {
+    if (ele === ele2) console.log("done");
+  });
+});

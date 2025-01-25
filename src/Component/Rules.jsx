@@ -4,7 +4,13 @@ import style from "./Rules.module.css";
 import React, { useEffect, useRef, useContext } from "react";
 import AuthContext from "../store/auth-context";
 
-export default function Rules({ input, numRules, setNumRules, setInput }) {
+export default function Rules({
+  input,
+  numRules,
+  setNumRules,
+  setInput,
+  inputRef,
+}) {
   const activeRule = RulesList.slice(0, 18);
   const statusArrayRef = useRef([]);
 
@@ -14,6 +20,7 @@ export default function Rules({ input, numRules, setNumRules, setInput }) {
       setNumRules((prev) => prev + 1);
     }
   }, [input, setNumRules, numRules]);
+  let temp2 = demo(setInput, inputRef);
 
   return (
     <div className={style.rules}>
@@ -53,6 +60,40 @@ export default function Rules({ input, numRules, setNumRules, setInput }) {
           }
         })}
       </div>
+      {temp2.comp}
     </div>
   );
+}
+
+function demo(setinput, inputRef) {
+  let isFollowed = false;
+  // const divRef = useRef(null);
+
+  const handleTextSelection = () => {
+    const selection = window.getSelection();
+    if (selection) {
+      const selectedText = selection.toString(); // Extract selected text
+      if (selectedText) {
+        const range = selection.getRangeAt(0); // Get the first range of selection
+        console.log("Selected text:", range.commonAncestorContainer.firstChild.innerHTML);
+        if (
+          inputRef.current.contains(range.commonAncestorContainer.firstChild)
+        ) {
+          console.log("Selected text:", selectedText);
+          setinput(selectedText);
+        }
+      }
+    }
+  };
+  return {
+    comp: (
+      <Rule
+        status={isFollowed}
+        index="20"
+        description="Oh no! Your password is on fire. Quick, put it out!"
+        onMouseDown={handleTextSelection}
+      ></Rule>
+    ),
+    isFollowed,
+  };
 }

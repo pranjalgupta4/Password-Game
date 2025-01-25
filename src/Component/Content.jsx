@@ -4,8 +4,20 @@ import Rules from "./Rules";
 import { useEffect, useRef, useState } from "react";
 import GraphemeSplitter from "grapheme-splitter";
 import AuthContext from "../store/auth-context";
+import JoditEditor from "jodit-react";
 
 export default function Content() {
+  const editor = useRef(null);
+  const [content, setContent] = useState("");
+  const config = {
+    // readonly: false,
+    // toolbarButtonSize: "middle",
+    buttons: ["bold"],
+    // toolbarAdaptive: false,
+    showXPathInStatusbar: false,
+    toolbar: false,
+  };
+
   const inputBoxRef = useRef(null);
   const [password, setPassword] = useState("");
   const [numRules, setNumRules] = useState(1);
@@ -46,12 +58,23 @@ export default function Content() {
               className={style.inputBox}
               value={password}
             ></textarea>
+            <JoditEditor
+              ref={editor}
+              value={content}
+              config={config}
+              className={style.joditEditor}
+              // tabIndex={1}
+              // onBlur={(newContent) => setContent(newContent)}
+              // onChange={(newContent) => setContent(newContent)}
+            />
             <p className={style.inputBoxDivP}>{wordCount}</p>
           </div>
           <Rules
             input={password}
             numRules={numRules}
             setNumRules={setNumRules}
+            setInput={setPassword}
+            inputRef={inputBoxRef}
           ></Rules>
         </div>
       </div>

@@ -1,0 +1,17 @@
+<link rel="stylesheet" href="richtexteditor/rte_theme_default.css" />
+<script type="javascript" src="richtexteditor/rte.js"></script>
+<script type="javascript" src="richtexteditor/plugins/all_plugins.js"></script>
+<div id="div_editor1">
+  <p>Hello world!</p>
+  <div style="">
+    <img
+      src="images/editor-image.png"
+    />
+  </div>
+</div>
+
+<script>
+  var editor1cfg = {};
+  editor1cfg.toolbar = "basic";
+  var editor1 = new RichTextEditor("#div_editor1", editor1cfg);
+</script>

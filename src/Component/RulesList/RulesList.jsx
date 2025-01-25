@@ -287,11 +287,14 @@ const RulesList = [
     let isFollowed = false;
     const reg = /[A-Z][a-z]/g;
     const matches = input.match(reg);
-    Object.keys(periodicTable).map((ele) => {
-      matches.map((ele2) => {
-        if (ele === ele2) isFollowed = true;
+
+    if (matches) {
+      Object.keys(periodicTable).map((ele) => {
+        matches.map((ele2) => {
+          if (ele === ele2) isFollowed = true;
+        });
       });
-    });
+    }
 
     return {
       comp: (
